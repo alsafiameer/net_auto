@@ -1,0 +1,51 @@
+{#
+Assumpation: 
+this temp use fro cisco C3750 platform 
+
+Steps: 
+====== 
+1- Retrative all the interface to default 
+2- Remove routing-protocols (OSPF, EIGRP , BGP)
+3- Delete all Policy-maps
+4- Delete all Class-maps
+5- Delete all stander ACL 
+6- Delete all extended ACL
+7- Delete all prefix-list
+#}
+
+{%- macro filter_name(iface) -%}
+  {{ iface|replace("/"," ") ~ "_iplist_filter" }}
+{%- endmacro -%}
+
+{%- for iface in interfaces %}
+        default inter {{iface.ip}} {{iface.metric}}
+{%- endfor %}
+
+{%- for iface in routing_protocols %}
+        no router {{iface}}
+{%- endfor %}
+
+no ip route 0.0.0.0 0.0.0.0 {{sr_next_hop}}
+no ip routing 
+
+{%- for plm in policy_maps %}
+        no policy-map {{plm}}
+{%- endfor %}
+
+{%- for clm in class_maps %}
+        no class-map match-all {{clm}}
+{%- endfor %}
+
+{%- for sacl in standard_acl %}
+        no ip access-list standard {{sacl}}
+{%- endfor -%}
+
+ 
+{%- for exacl in extended_acl %}
+        no ip access-list standard {{exacl}}
+{%- endfor %}
+
+
+{%- for pfxl in prefix_list %}
+        no ip prefix-list {{pfxl}}
+{%- endfor %}
