@@ -12,9 +12,10 @@ routing_protocols:
     - eigrp 1
     - ospf 100
     - bgp 64522
+    
 sr_next_hop:
-    - ip: 10.99.192.6
-    - metric: 245
+    ip: 10.99.192.6
+    metric: 245
 
 policy_maps:
     - MARK_DIFFSRV_VALUE
