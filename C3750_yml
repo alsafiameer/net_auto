@@ -1,0 +1,45 @@
+---
+interfaces:
+    - FastEthernet1/0/22
+    - FastEthernet1/0/23
+    - FastEthernet1/0/24
+    - GigabitEthernet1/0/1
+    - GigabitEthernet1/0/2
+    - GigabitEthernet1/1/1
+    - GigabitEthernet1/1/2
+
+routing_protocols:
+    - eigrp 1
+    - ospf 100
+    - bgp 64522
+sr_next_hop:
+    - ip: 10.99.192.6
+    - metric: 245
+
+policy_maps:
+    - MARK_DIFFSRV_VALUE
+    - QOS_POLICY_395
+    - SHAPE_50MBPS
+
+class_maps:
+    - MATCH_SERVER_BACKUPS
+    - MATCH_VOIP
+    - MARK_SCAVENGER_DIFFSRV
+    - MATCH_CRITICAL_APP
+    - MARK_SERVER_BACKUPS_DIFFSRV
+    - EIGRP
+    - MATCH_SCAVENGER
+    - MARK_CRITICAL_APP_DIFFSRV
+
+standard_acl:
+    - SNMP_MANAGEMENT
+
+extended_acl:
+    - MARK_CRITICAL_APP_DIFFSRV
+    - MARK_SCAVENGER_DIFFSRV
+    - MARK_SERVER_BACKUPS_DIFFSRV
+    - REMOTE_MANAGEMENT
+
+prefix_list:
+    - DEFAULT
+    - DEFAULT_BLOCK 
